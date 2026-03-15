@@ -1,0 +1,19 @@
+- type: soundCollection
+  id: CameraMonitorActivate
+  files:
+  - /Audio/_DEN/Effects/Machines/Computers/CameraMonitor/camera_monitor_activate.ogg
+
+- type: soundCollection
+  id: CameraMonitorBadSignalLoop
+  files:
+  - /Audio/_DEN/Effects/Machines/Computers/CameraMonitor/camera_monitor_bad_signal_loop_1.ogg
+  - /Audio/_DEN/Effects/Machines/Computers/CameraMonitor/camera_monitor_bad_signal_loop_2.ogg
+  - /Audio/_DEN/Effects/Machines/Computers/CameraMonitor/camera_monitor_bad_signal_loop_3.ogg
+  - /Audio/_DEN/Effects/Machines/Computers/CameraMonitor/camera_monitor_bad_signal_loop_4.ogg
+
+- type: soundCollection
+  id: CameraMonitorSwitch
+  files:
+  - /Audio/_DEN/Effects/Machines/Computers/CameraMonitor/camera_monitor_switch_1.ogg
+  - /Audio/_DEN/Effects/Machines/Computers/CameraMonitor/camera_monitor_switch_2.ogg
+

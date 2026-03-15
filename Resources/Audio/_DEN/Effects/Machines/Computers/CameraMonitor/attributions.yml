@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: 2024 Fluffiest Floofers
+# SPDX-FileCopyrightText: 2024 VMSolidus
+# SPDX-FileCopyrightText: 2025 Shaman
+# SPDX-FileCopyrightText: 2025 dootythefrooty
+# SPDX-FileCopyrightText: 2025 sleepyyapril
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+- files: ["camera_monitor_activate.ogg", "camera_monitor_switch_1.ogg", "camera_monitor_switch_2.ogg", "camera_monitor_bad_signal_loop_1.ogg", "camera_monitor_bad_signal_loop_2.ogg", "camera_monitor_bad_signal_loop_3.ogg", "camera_monitor_bad_signal_loop_4.ogg"]
+  license: "CC-BY-SA-4.0"
+  copyright: "Made by MajorMoth, using samples from the Sonniss GDB library"
+  source: "https://www.youtube.com/watch?v=CMmU8dmmvfU"
