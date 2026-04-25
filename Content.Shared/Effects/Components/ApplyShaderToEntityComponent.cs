@@ -34,13 +34,32 @@ public sealed partial class ApplyShaderToEntityComponent : Component
     public bool PassScreenTexture = false;
 
     /// <summary>
-    /// The shader parameters, a dict constructed like "shaderParameter": value
+    /// The shader parameters, a dictionary constructed like: "shaderParameterName": value
     /// You will need to look into the actual shader's code for parameter names and what kind of values they take.
-    /// Unfortunately, for now, I simply don't know how to parse anything other than floats, so shaders with parameters expressed in vectors cannot be changed here.
+    /// See https://docs.spacestation14.com/en/robust-toolbox/rendering/shaders.html for documentation.
     /// </summary>
     [DataField("shaderParams")]
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public Dictionary<string, float> ShaderParameters = new Dictionary<string, float> { };
-
+    public Dictionary<string, object> ShaderParameters = new Dictionary<string, object> { };
+    // the use of `dynamic` here is (I think) genuinely warranted, but the engine does not allow for its use anywhere.
+    // SetParameter from ShaderInstance has more than a dozen overloads for all the various data types. using `object' involves a whole lot of finagling but whatever
 }
+
+/*
+public enum LightMode : byte
+{
+    normal,
+    unshaded,
+    light_only
+}
+
+public enum BlendMode : byte
+{
+    mix,
+    add,
+    subtract,
+    multiply,
+    premultiplied_alpha
+}
+*/

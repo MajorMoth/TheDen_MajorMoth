@@ -6,3 +6,9 @@
   id: AnalogDistortion
   kind: source
   path: "/Textures/_DEN/Shaders/analog_distortion.swsl"
+
+- type: shader
+  id: AnalogDistortionUnshaded
+  kind: source
+  path: "/Textures/_DEN/Shaders/analog_distortion_unshaded.swsl"
+

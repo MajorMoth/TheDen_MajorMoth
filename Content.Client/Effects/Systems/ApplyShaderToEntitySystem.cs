@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
+using System.Numerics;
 using Content.Shared.Effects.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -27,7 +28,6 @@ public sealed class ApplyShaderToEntitySystem : EntitySystem
 
         SubscribeLocalEvent<ApplyShaderToEntityComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<ApplyShaderToEntityComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<ApplyShaderToEntityComponent, BeforePostShaderRenderEvent>(OnShaderRender);
         SubscribeLocalEvent<ApplyShaderToEntityComponent, AfterAutoHandleStateEvent>(OnHandleState);
 
         _sawmill = _logManager.GetSawmill("ApplyShaderToEntity");
@@ -62,31 +62,42 @@ public sealed class ApplyShaderToEntitySystem : EntitySystem
 
         sprite.PostShader = enabled ? _shader : null;
         sprite.GetScreenTexture = component.PassScreenTexture && enabled;
-        sprite.RaiseShaderEvent = enabled;
 
         _shader.SetParameter("noise_texture", _noiseTexture); // we don't need to set this every frame since it's completely static and never changes.
+
+        foreach (var parameter in component.ShaderParameters)
+        {
+            _sawmill.Info($"The type of parameter {parameter.Key} is {parameter.Value.GetType().FullName}");
+            _sawmill.Info($"The value of parameter {parameter.Key} is {parameter.Value}");
+            switch (parameter.Value)
+            {
+                case bool b: _shader.SetParameter(parameter.Key, b); break;
+                case int i: _shader.SetParameter(parameter.Key, i); break;
+                case float f: _shader.SetParameter(parameter.Key, f); break;
+                case Vector2 vec2: _shader.SetParameter(parameter.Key, vec2); break;
+                case Vector3 vec3: _shader.SetParameter(parameter.Key, vec3); break;
+                case Vector4 vec4: _shader.SetParameter(parameter.Key, vec4); break;
+                case Color c: _shader.SetParameter(parameter.Key, c); break;
+                default:
+                    _sawmill.Error($"Enountered an unexpected data type when setting shader parameter: {parameter.Key} on entity: {uid}");
+                    break;
+            }
+        }
     }
     private bool ValidateShaderId(EntityUid uid, string shaderPrototypeId)
     {
         if (shaderPrototypeId is null)
         {
-            _sawmill.Info($"Shader prototype on entity {uid} was null.");
+            _sawmill.Debug($"Shader prototype on entity {uid} was null.");
             return false;
         }
 
         if (!_prototypeManager.HasIndex<ShaderPrototype>(shaderPrototypeId))
         {
-            _sawmill.Info($"Did not find specified shader prototype: {shaderPrototypeId} on entity {uid}");
+            _sawmill.Debug($"Did not find specified shader prototype: {shaderPrototypeId} on entity {uid}");
             return false;
         }
 
         return true;
-    }
-    private void OnShaderRender(EntityUid uid, ApplyShaderToEntityComponent component, BeforePostShaderRenderEvent args)
-    {
-        foreach (var parameter in component.ShaderParameters)
-        {
-            _shader.SetParameter(parameter.Key, parameter.Value);
-        }
     }
 }
