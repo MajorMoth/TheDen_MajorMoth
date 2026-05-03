@@ -22,3 +22,17 @@
     bottom_border_thickness: 32.0
     bottom_border_jitter: 10.0
     noise_intensity: 0.0
+
+- type: shader
+  id: AnimatedOutline
+  kind: source
+  path: "/Textures/_DEN/Shaders/animated_outline.swsl"
+  params:
+    max_line_width: 50.0
+    min_line_width: 25.0
+    freq: 24
+    block_size: 20.0
+    starting_colour: 1,0,1,1
+    ending_colour: 0,0,1,0
+    outline_anim_speed: 0.01
+    wave_intensity: 5

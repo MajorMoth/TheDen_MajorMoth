@@ -167,6 +167,8 @@
   categories: [ HideSpawnMenu ]
   abstract: true
   components:
+  - type: ApplyShaderToEntity
+    shaderProto: AnimatedOutline
   - type: Fixtures
     fixtures:
       projectile:

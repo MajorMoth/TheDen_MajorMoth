@@ -1,0 +1,86 @@
+// taken from https://godotshaders.com/shader/animated-and-gradient-outlines/ in order to be implemented into Space Station 14. modified in order to work in SWSL
+
+light_mode unshaded;
+
+uniform lowp float max_line_width;
+uniform lowp float min_line_width;
+uniform lowp float freq;
+uniform lowp float block_size;
+uniform lowp float outline_anim_speed;
+uniform highp vec4 starting_colour;
+uniform highp vec4 ending_colour;
+uniform lowp float wave_intensity;
+
+const lowp float pi = 3.1415;
+const lowp int ang_res = 16;
+const lowp int grad_res = 8;
+
+lowp float hash(lowp vec2 p, lowp float s) {
+	return fract(35.1 * sin(dot(vec3(112.3, 459.2, 753.2), vec3(p, s))));
+}
+
+lowp float noise(lowp vec2 p, lowp float s) {
+	vec2 d = vec2(0, 1);
+	vec2 b = floor(p);
+	vec2 f = fract(p);
+	return mix(
+		mix(hash(b + d.xx, s), hash(b + d.yx, s), f.x),
+		mix(hash(b + d.xy, s), hash(b + d.yy, s), f.x), f.y);
+}
+
+lowp float getLineWidth(lowp vec2 p, lowp float s) {
+	p /= block_size;
+	lowp float w = 0.0;
+	lowp float intensity = wave_intensity;
+	for (int i = 0; i < 3; i++) {
+		w = mix(w, noise(p, s), intensity);
+		p /= 2.0;
+		intensity /= 2.0;
+	}
+
+	return mix(max_line_width, min_line_width, w);
+}
+
+bool pixelInRange(sampler2D text, lowp vec2 uv, lowp vec2 dist) {
+	highp float alpha = 0.0;
+	for (int i = 0; i < ang_res; i++) {
+		highp float angle = 2.0 * pi * float(i) / float(ang_res);
+		lowp vec2 disp = dist * vec2(cos(angle), sin(angle));
+		if (texture(text, uv + disp).a > 0.0) return true;
+	}
+	return false;
+}
+
+lowp float getClosestDistance(sampler2D text, lowp vec2 uv, lowp vec2 maxDist) {
+	if (!pixelInRange(text, uv, maxDist)) return -1.0;
+
+	lowp float hi = 1.0;
+    lowp float lo = 0.0;
+
+	for (int i = 1; i <= grad_res; i++) {
+		lowp float curr = (hi + lo) / 2.0;
+		if (pixelInRange(text, uv, curr * maxDist)) {
+			hi = curr;
+		}
+		else {
+			lo = curr;
+		}
+	}
+	return hi;
+
+}
+
+void fragment() {
+	highp float timeStep = floor(freq * TIME);
+	lowp vec2 scaledDist = TEXTURE_PIXEL_SIZE;
+	scaledDist *= getLineWidth(UV / TEXTURE_PIXEL_SIZE, timeStep);
+	highp float w = getClosestDistance(TEXTURE, UV, scaledDist);
+
+	if (( w > 0.0) && (texture(TEXTURE, UV).a < 0.2)) {
+		COLOR = mix(starting_colour, ending_colour, tanh(3.0*w));
+	}
+	else {
+		COLOR = texture(TEXTURE, UV);
+	}
+
+}

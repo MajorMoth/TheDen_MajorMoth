@@ -32,3 +32,14 @@
     - type: ApplyShaderToEntity
       passScreen: false
       shaderProto: Crispy
+
+- type: entity
+  parent: ShaderDebugCloak
+  id: ShaderDebugCloakOutline
+  name: outline shader debugging cloak
+  components:
+  - type: ClothingGrantComponent
+    component:
+    - type: ApplyShaderToEntity
+      passScreen: false
+      shaderProto: AnimatedOutline
