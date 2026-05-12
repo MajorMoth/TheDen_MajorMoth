@@ -1,0 +1,21 @@
+- type: entity
+  id: BriefcaseSyndieAmenesticKit
+  parent: BriefcaseSyndie
+  suffix: Syndicate, Amnestic Kit
+  components:
+  - type: Item
+    size: Ginormous
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,1,2
+    - 3,0,4,2
+    - 6,0,7,2
+  - type: StorageFill
+    contents:
+      - id: WeaponSniperHristov
+      - id: MagazineBoxAntiMateriel
+      - id: ClothingNeckTieRed
+      - id: ClothingHandsGlovesLatex
+      - id: ClothingUniformHitmanSuit #imp
+      - id: BarberScissors

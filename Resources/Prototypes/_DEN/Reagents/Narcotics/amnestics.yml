@@ -1,0 +1,54 @@
+- type: reagent
+  id: BaseAmnestic
+  group: Amnestics
+  flavor: bitter
+  flavorMinimum: 10
+  color: "#ffffff"
+
+- type: reagent
+  id: Phenazepam
+  parent: BaseAmnestic
+  name: reagent-name-phenazepam
+  desc: reagent-desc-phenazepam
+  physicalDesc: reagent-physical-desc-milky
+  metabolisms:
+    Narcotic:
+      metabolismRate : 0.01
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: Small
+        probability: 0.2
+        messages:
+          - "reagent-effect-aphrodisiac-fade"
+        conditions:
+          - !type:ReagentThreshold
+            max: 0.1
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        probability: 0.10
+        messages:
+        - reagent-effect-aphrodisiac-strong1
+        - reagent-effect-aphrodisiac-strong2
+        conditions:
+        - !type:ReagentThreshold
+          min: 0.1
+          max: 10.0
+      - !type:PopupMessage
+        type: Local
+        visualType: LargeCaution
+        probability: 0.2
+        messages:
+        - reagent-effect-aphrodisiac-strongoverdose1
+        - reagent-effect-aphrodisiac-strongoverdose2
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+            Poison: 0.05

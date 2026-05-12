@@ -1,0 +1,37 @@
+- type: entity
+  name: pill
+  suffix: cryptobiolin 15u # TheDen
+  parent: Pill
+  id: PillCryptobiolin
+  description: "A temporary anti-psionic." # TheDen
+  components:
+  - type: Label # TheDen
+    currentLabel: cryptobiolin 15u # TheDen
+  - type: Sprite # TheDen - Cryptobiolin colored pill
+    sprite: _DEN/Objects/Specific/Chemistry/pills.rsi
+    state: cryptopill
+  - type: Pill
+    state: cryptopill
+  - type: Item
+    size: Tiny
+    sprite: _DEN/Objects/Specific/Chemistry/pills.rsi
+    heldPrefix: crypto
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15 # TheDen
+        reagents:
+        - ReagentId: Cryptobiolin
+          Quantity: 15 # TheDen
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterCryptobiolin
+  suffix: cryptobiolin, 10 # TheDen
+  components:
+  - type: Label
+    currentLabel: cryptobiolin 15u # TheDen
+  - type: StorageFill
+    contents:
+    - id: PillCryptobiolin
+      amount: 10 # TheDen

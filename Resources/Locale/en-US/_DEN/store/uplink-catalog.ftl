@@ -28,3 +28,6 @@ uplink-syndicate-eggnog-desc = For those special occasions. This stuff will knoc
 
 uplink-baseballbundle-name = syndicate baseball uniform bundle
 uplink-baseballbundle-desc = Go to bat for the winning team with this stylish uniform.
+
+uplink-amnestic-kit-name = Amnestic Kit
+uplink-amnestic-kit-desc = An all-inclusive kit designed for chemical management of memories.

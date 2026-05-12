@@ -1,0 +1,8 @@
+- type: entity
+  parent: Paper
+  id: PaperWrittenAmnesticKitReagentName
+  name: reagent instructions
+  suffix: Amnestic Kit, Reagent
+  components:
+  - type: Paper
+    content: amnestic-kit-instruction-reagent
