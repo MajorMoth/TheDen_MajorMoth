@@ -7,7 +7,7 @@ using Robust.Client.UserInterface;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.DumpPrototypesCommand;
+namespace Content.Client._DEN.DumpPrototypesCommand;
 
 [AnyCommand]
 public sealed class DumpPrototypesCommand : IConsoleCommand
